@@ -14,44 +14,44 @@
 1. [Download joomshopping-begateway.zip](https://github.com/beGateway/joomshopping-payment-module/blob/master/joomshopping-begateway.zip?raw=true)
 2. Go to Joomla's administration panel
 3. Go to extension manager for JoomShopping (arrow #1)
-  ![go to extension manager](master/doc/img/go_to_extensions_manager.png)
+  ![go to extension manager](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/go_to_extensions_manager.png)
 4. Install the module package
   1. Open file upload dialogue (arrow #1)
   2. Select the module package file saved at the step 1.
   3. Upload and install the module (arrow #2)
-  ![upload and install plugin](master/doc/img/upload_and_install_plugin.png)
+  ![upload and install plugin](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/upload_and_install_plugin.png)
 
 ## The module configuration
 
 1. Go to Joomla's administration panel
 2. Go to the panel "Options" of JoomShopping (arrow #1)
-  ![go to joomshop options](master/doc/img/go_to_options.png)
+  ![go to joomshop options](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/go_to_options.png)
 3. Go to payment methods list (arrow #1)
-  ![go to payment methods](master/doc/img/go_to_payment_methods.png)
+  ![go to payment methods](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/go_to_payment_methods.png)
 4. Press "Edit" button (arrow #1)
-  ![go to edit payment method form](master/doc/img/go_to_edit_payment_method_form.png)
+  ![go to edit payment method form](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/go_to_edit_payment_method_form.png)
 5. Configure the module
   1. Open "Config" tab (arrow #1)
   2. Fill the settings form
   4. Save the payment method and close the form (arrow #2)
 
-  ![edit payment method](master/doc/img/edit_payment_method.png)
+  ![edit payment method](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/edit_payment_method.png)
 6. Publish the payment method
   1. Select the payment method in payment methods list (arrow #1)
   2. Publish it (arrow #2)
-  ![publish payment method](master/doc/img/publish_payment_method.png)
+  ![publish payment method](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/publish_payment_method.png)
 
 ## Uninstall the module
 
 1. Go to Joomla's administration panel
 2. Go to the panel "Options" of JoomShopping (arrow #1)
-  ![go to joomshop options](master/doc/img/go_to_options.png)
+  ![go to joomshop options](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/go_to_options.png)
 3. Go to payment methods list (arrow #1)
-  ![go to payment methods](master/doc/img/go_to_payment_methods.png)
+  ![go to payment methods](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/go_to_payment_methods.png)
 4. Delete the payment method
   1. Select the payment method in payment methods list (arrow #1)
   2. Delete the payment method (arrow #2)
-  ![delete payment method](master/doc/img/delete_payment_method.png)
+  ![delete payment method](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/delete_payment_method.png)
 5. To completly remove the module you have to delete files and folders in your Joomla's directory:
   * `components/vendor`
   * `components/com_jshopping/payments/pm_begateway`
@@ -94,43 +94,43 @@ Issue pull requests or send feature requests.
 1. [Скачайте joomshopping-begateway.zip](https://github.com/beGateway/joomshopping-payment-module/blob/master/joomshopping-begateway.zip?raw=true)
 2. Зайдите в панель администратора Joomla
 3. Через меню _Компоненты_ перейдите в JoomShopping _Установка и обновление_ (стрелка #1)
-  ![go to extension manager](master/doc/img/ru/go_to_extensions_manager.png)
+  ![go to extension manager](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/go_to_extensions_manager.png)
 4. Установите пакет
   1. Откройте страницу _Загрузить файл пакета_ (стрелка #1)
   2. Выберите файл архива модуля, скаченного на шаге 1
   3. Загрузите и установите модуль (стрелка #2)
-  ![upload and install plugin](master/doc/img/ru/upload_and_install_plugin.png)
+  ![upload and install plugin](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/upload_and_install_plugin.png)
 
 ## Настройка модуля
 
 1. Зайдите в панель администратора Joomla
 2. Перейдите в панель _Опции_ JoomShopping (стрелка #1)
-  ![go to joomshop options](master/doc/img/ru/go_to_options.png)
+  ![go to joomshop options](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/go_to_options.png)
 3. Перейдите в _Способ оплаты_ (стрелка #1)
-  ![go to payment methods](master/doc/img/ru/go_to_payment_methods.png)
+  ![go to payment methods](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/go_to_payment_methods.png)
 4. Нажните кнопку _Редактировать_ (стрелка #1)
-  ![go to edit payment method form](master/doc/img/ru/go_to_edit_payment_method_form.png)
+  ![go to edit payment method form](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/go_to_edit_payment_method_form.png)
 5. Настройте модуль
   1. Выберите закладку _Конфигурация_ (стрелка #1)
   2. Введите настройки модуля
   4. Нажмите _Сохранить и закрыть_ (стрелка #2)
-  ![edit payment method](master/doc/img/ru/edit_payment_method.png)
+  ![edit payment method](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/edit_payment_method.png)
 6. Опубликуйте способ оплаты
   1. Выберите настроенный способ оплаты в списке доступных способов оплаты (стрелка #1)
   2. Опубликуйте его (стрелка #2)
-  ![publish payment method](master/doc/img/ru/publish_payment_method.png)
+  ![publish payment method](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/publish_payment_method.png)
 
 ## Удалить модуль
 
 1. Зайдите в панель администратора Joomla
 2. Перейдите в панель _Опции_ JoomShopping (стрелка #1)
-  ![go to joomshop options](master/doc/img/ru/go_to_options.png)
+  ![go to joomshop options](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/go_to_options.png)
 3. Перейдите в _Способ оплаты_ (стрелка #1)
-  ![go to payment methods](master/doc/img/ru/go_to_payment_methods.png)
+  ![go to payment methods](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/go_to_payment_methods.png)
 4. Удалить способ оплаты
   1. Выберите настроенный способ оплаты в списке доступных способов оплаты (стрелка #1)
   2. Удалите выбранный способ оплаты (стрелка #2)
-  ![delete payment method](master/doc/img/ru/delete_payment_method.png)
+  ![delete payment method](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/delete_payment_method.png)
 5. Для полного удаления модуля удалите следующие файлы и директории в директории Joomla:
   * `components/vendor`
   * `components/com_jshopping/payments/pm_begateway`
