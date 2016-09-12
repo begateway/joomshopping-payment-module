@@ -1,6 +1,6 @@
 <?php
 /**
- * @version      1.00
+ * @version      1.50
  * @author       eComCharge Ltd SIA
  * @package      pm_begateway
  * @copyright    Copyright (C) 2014
@@ -8,7 +8,8 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
-require_once dirname(__FILE__) . '/begateway-api-php/lib/beGateway.php';
+if (!class_exists('\beGateway\Settings'))
+  require_once dirname(__FILE__) . '/begateway-api-php/lib/beGateway.php';
 
 class pm_begateway extends PaymentRoot {
 
@@ -159,25 +160,36 @@ class pm_begateway extends PaymentRoot {
     $token->customer->setAddress($order->d_street);
     $token->customer->setCity($order->d_city);
     $token->customer->setZip($order->d_zip);
-    $token->customer->setEmail($order->email);
+
+    if (strlen($order->email) > 0)
+      $token->customer->setEmail($order->email);
 
     if (in_array($country, array('US', 'CA') )) {
       $token->customer->setState($order->d_state);
     }
     $token->setAddressHidden();
     $response = $token->submit();
+
 ?>
         <html>
         <head>
             <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         </head>
         <body>
-        <form id="paymentform" action="https://<?php echo $pmconfigs['domain_checkout']; ?>/checkout" name = "paymentform" method = "post">
-          <input type='hidden' name='token' value='<?php print $response->getToken() ?>'>
+<?php
+    if ($response->isSuccess()) {
+?>
+        <form id="paymentform" action="<?php echo $response->getRedirectUrlScriptName(); ?>" name = "paymentform" method = "post">
+          <input type='hidden' name='token' value='<?php print $response->getToken(); ?>'>
         </form>
         <?php print _JSHOP_REDIRECT_TO_PAYMENT_PAGE?>
         <br>
         <script type="text/javascript">document.getElementById('paymentform').submit();</script>
+<?php
+    } else {
+      print _JSHOP_ERROR_PAYMENT . ': ' . $response->getMessage();
+    }
+?>
         </body>
         </html>
 <?php
