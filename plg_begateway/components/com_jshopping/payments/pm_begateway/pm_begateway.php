@@ -1,6 +1,6 @@
 <?php
-/**
- * @version      1.50
+/*
+ * @version      1.55
  * @author       eComCharge Ltd SIA
  * @package      pm_begateway
  * @copyright    Copyright (C) 2014
