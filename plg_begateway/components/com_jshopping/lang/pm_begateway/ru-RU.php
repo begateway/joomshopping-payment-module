@@ -21,4 +21,8 @@ define(_JSHOP_BEGATEWAY_SHOP_ID_DESCRIPTION, '');
 define(_JSHOP_BEGATEWAY_SHOP_SECRET_KEY_DESCRIPTION, '');
 define(_JSHOP_BEGATEWAY_DOMAIN_GATEWAY_DESCRIPTION, '');
 define(_JSHOP_BEGATEWAY_DOMAIN_CHECKOUT_DESCRIPTION, '');
+define(_JSHOP_BEGATEWAY_TEST_MODE, 'Включить тестовый режим');
+define(_JSHOP_BEGATEWAY_ENABLE_BANKCARD, 'Включить оплату банковскими картами');
+define(_JSHOP_BEGATEWAY_ENABLE_BANKCARD_HALVA, 'Включить оплату картой Халва');
+define(_JSHOP_BEGATEWAY_ENABLE_ERIP, 'Включить оплату через ЕРИП');
 ?>

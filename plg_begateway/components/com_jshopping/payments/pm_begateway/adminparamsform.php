@@ -82,11 +82,51 @@ defined('_JEXEC') or die('Restricted access');
  </tr>
  <tr>
    <td class="key">
+     <?php echo _JSHOP_BEGATEWAY_ENABLE_BANKCARD;?>
+   </td>
+   <td>
+     <?php
+     print JHTML::_('select.booleanlist', 'pm_params[enable_bankcard]', 'class = "inputbox"', $params['enable_bankcard']);
+     ?>
+   </td>
+ </tr>
+ <tr>
+   <td class="key">
+     <?php echo _JSHOP_BEGATEWAY_ENABLE_BANKCARD_HALVA;?>
+   </td>
+   <td>
+     <?php
+     print JHTML::_('select.booleanlist', 'pm_params[enable_bankcard_halva]', 'class = "inputbox"', $params['enable_bankcard_halva']);
+     ?>
+   </td>
+ </tr>
+ <tr>
+   <td class="key">
+     <?php echo _JSHOP_BEGATEWAY_ENABLE_ERIP;?>
+   </td>
+   <td>
+     <?php
+     print JHTML::_('select.booleanlist', 'pm_params[enable_erip]', 'class = "inputbox"', $params['enable_erip']);
+     ?>
+   </td>
+ </tr>
+ <tr>
+   <td class="key">
      <?php echo _JSHOP_BEGATEWAY_CHECK_DATA_RETURN;?>
    </td>
    <td>
      <?php
      print JHTML::_('select.booleanlist', 'pm_params[checkdatareturn]', 'class = "inputbox"', $params['checkdatareturn']);
+     ?>
+   </td>
+ </tr>
+ <tr>
+   <td class="key">
+     <?php echo _JSHOP_BEGATEWAY_TEST_MODE;?>
+   </td>
+   <td>
+     <?php
+     print JHTML::_('select.booleanlist', 'pm_params[test_mode]', 'class = "inputbox"', $params['test_mode']);
      ?>
    </td>
  </tr>

@@ -1,6 +1,6 @@
 <?php
 /*
- * @version      1.55
+ * @version      1.6.0
  * @author       eComCharge Ltd SIA
  * @package      pm_begateway
  * @copyright    Copyright (C) 2014
@@ -8,8 +8,7 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
-if (!class_exists('\beGateway\Settings'))
-  require_once dirname(__FILE__) . '/begateway-api-php/lib/beGateway.php';
+require_once dirname(__FILE__) . '/begateway-api-php/lib/BeGateway.php';
 
 class pm_begateway extends PaymentRoot {
 
@@ -34,8 +33,16 @@ class pm_begateway extends PaymentRoot {
     $array_params = array(
       'domain_gateway', 'domain_checkout', 'shop_id', 'shop_secret_key',
       'transaction_end_status', 'transaction_pending_status',
-      'transaction_failed_status');
+      'transaction_failed_status',
+      'test_mode', 'enable_bankcard', 'enable_bankcard_halva', 'enable_erip'
+    );
 
+    if (!isset($params['test_mode'])) {
+      $params['test_mode'] = 1;
+    }
+    if (!isset($params['enable_bankcard'])) {
+      $params['enable_bankcard'] = 1;
+    }
     foreach ($array_params as $key){
       if (!isset($params[$key])) $params[$key] = '';
     }
@@ -53,7 +60,7 @@ class pm_begateway extends PaymentRoot {
     }
     if ($act == 'notify') {
       $this->_init_pm($pmconfigs);
-      $this->_verify_request = new \beGateway\Webhook();
+      $this->_verify_request = new \BeGateway\Webhook();
       if (!$this->_verify_request->isAuthorized()) {
         $this->sendToLog("Status pending. Order ID ".$order->order_id.". Webhook authorization error.");
         return array(0, 'Error to authorize webhook. Order ID: '.$order->order_id);
@@ -142,7 +149,7 @@ class pm_begateway extends PaymentRoot {
     $language = $language[0];
 
     $this->_init_pm($pmconfigs);
-    $token = new \beGateway\GetPaymentToken();
+    $token = new \BeGateway\GetPaymentToken();
     $token->money->setAmount($order->order_total);
     $token->money->setCurrency($order->currency_code_iso);
     $token->setTrackingId("$order->order_id|$order->order_total|$order->currency_code_iso");
@@ -153,6 +160,25 @@ class pm_begateway extends PaymentRoot {
     $token->setDeclineUrl($cancel_return);
     $token->setFailUrl($cancel_return);
     $token->setCancelUrl($cancel_return);
+    $token->setTestMode($pmconfigs['test_mode'] == 1);
+
+    if ($pmconfigs['enable_bankcard'] == 1) {
+      $cc = new \BeGateway\PaymentMethod\CreditCard;
+      $token->addPaymentMethod($cc);
+    }
+
+    if ($pmconfigs['enable_bankcard_halva'] == 1) {
+      $halva = new \BeGateway\PaymentMethod\CreditCardHalva;
+      $token->addPaymentMethod($halva);
+    }
+
+    if ($pmconfigs['enable_erip'] == 1) {
+      $erip = new \BeGateway\PaymentMethod\Erip(array(
+        'order_id' => $order->order_id,
+        'account_number' => strval($order->order_id)
+      ));
+      $token->addPaymentMethod($erip);
+    }
 
     $token->customer->setFirstName($order->d_f_name);
     $token->customer->setLastName($order->d_l_name);
@@ -167,7 +193,6 @@ class pm_begateway extends PaymentRoot {
     if (in_array($country, array('US', 'CA') )) {
       $token->customer->setState($order->d_state);
     }
-    $token->setAddressHidden();
     $response = $token->submit();
 
 ?>
@@ -198,16 +223,16 @@ class pm_begateway extends PaymentRoot {
 
   function _query_pm($pmconfigs,$uid) {
     $this->_init_pm($pmconfigs);
-    $query = new \beGateway\QueryByUid();
+    $query = new \BeGateway\QueryByUid();
     $query->setUid($uid);
     $this->_verify_request = $query->submit();
   }
 
   function _init_pm($pmconfigs) {
-    \beGateway\Settings::$gatewayBase = 'https://' . $pmconfigs['domain_gateway'];
-    \beGateway\Settings::$checkoutBase = 'https://' . $pmconfigs['domain_checkout'];
-    \beGateway\Settings::$shopId = $pmconfigs['shop_id'];
-    \beGateway\Settings::$shopKey = $pmconfigs['shop_secret_key'];
+    \BeGateway\Settings::$gatewayBase = 'https://' . $pmconfigs['domain_gateway'];
+    \BeGateway\Settings::$checkoutBase = 'https://' . $pmconfigs['domain_checkout'];
+    \BeGateway\Settings::$shopId = $pmconfigs['shop_id'];
+    \BeGateway\Settings::$shopKey = $pmconfigs['shop_secret_key'];
   }
 
   function getUrlParams($pmconfigs){
@@ -222,7 +247,7 @@ class pm_begateway extends PaymentRoot {
       }else{
         # try to process webhook
         $this->_init_pm($pmconfigs);
-        $this->_verify_request = new \beGateway\Webhook();
+        $this->_verify_request = new \BeGateway\Webhook();
         $params['order_id'] = $this->_verify_request->getTrackingId();
       }
     }
