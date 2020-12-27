@@ -1,9 +1,9 @@
 <?php
 /**
- * @version      1.00
- * @author       eComCharge Ltd SIA
+ * @version      1.0.0
+ * @author       eComCharge LLC
  * @package      pm_begateway
- * @copyright    Copyright (C) 2014
+ * @copyright    Copyright (C) 2020
  * @license      GNU/GPL
  */
 defined('_JEXEC') or die('Restricted access');

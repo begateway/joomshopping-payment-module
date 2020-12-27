@@ -1,9 +1,9 @@
 <?php
 /**
- * @version      1.00
- * @author       eComCharge Ltd SIA
+ * @version      2.0.0
+ * @author       eComCharge LLC
  * @package      pm_begateway
- * @copyright    Copyright (C) 2014
+ * @copyright    Copyright (C) 2020
  * @license      GNU/GPL
  */
 defined('_JEXEC') or die('Restricted access');
@@ -45,6 +45,24 @@ defined('_JEXEC') or die('Restricted access');
     <td>
       <input type = "text" class = "inputbox" name = "pm_params[shop_secret_key]" size="45" value = "<?php echo $params['shop_secret_key']?>" />
       <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_SHOP_SECRET_KEY_DESCRIPTION);?>
+    </td>
+  </tr>
+  <tr>
+    <td  class="key">
+      <?php echo _JSHOP_BEGATEWAY_SHOP_PUBLIC_KEY;?>
+    </td>
+    <td>
+      <input type = "text" class = "inputbox" name = "pm_params[shop_public_key]" size="45" value = "<?php echo $params['shop_public_key']?>" />
+      <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_SHOP_PUBLIC_KEY_DESCRIPTION);?>
+    </td>
+  </tr>
+  <tr>
+    <td  class="key">
+      <?php echo _JSHOP_BEGATEWAY_WIDGET_CSS;?>
+    </td>
+    <td>
+      <input type = "text" class = "inputbox" name = "pm_params[widget_css]" size="45" value = "<?php echo $params['widget_css']?>" />
+      <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_WIDGET_CSS_DESCRIPTION);?>
     </td>
   </tr>
  <tr>
@@ -107,16 +125,6 @@ defined('_JEXEC') or die('Restricted access');
    <td>
      <?php
      print JHTML::_('select.booleanlist', 'pm_params[enable_erip]', 'class = "inputbox"', $params['enable_erip']);
-     ?>
-   </td>
- </tr>
- <tr>
-   <td class="key">
-     <?php echo _JSHOP_BEGATEWAY_CHECK_DATA_RETURN;?>
-   </td>
-   <td>
-     <?php
-     print JHTML::_('select.booleanlist', 'pm_params[checkdatareturn]', 'class = "inputbox"', $params['checkdatareturn']);
      ?>
    </td>
  </tr>
