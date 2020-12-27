@@ -7,6 +7,11 @@
  * @license      GNU/GPL
  */
 defined('_JEXEC') or die('Restricted access');
+
+$transaction_types = array();
+$transaction_types[] = JHTML::_('select.option', 'payment',_JSHOP_BEGATEWAY_TRANSACTION_TYPE_PAYMENT, 'id', 'name');
+$transaction_types[] = JHTML::_('select.option', 'authorization',_JSHOP_BEGATEWAY_TRANSACTION_TYPE_AUTHORIZATION, 'id', 'name');
+
 ?>
 <div class="col100">
 <fieldset class="adminform">
@@ -65,6 +70,17 @@ defined('_JEXEC') or die('Restricted access');
       <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_WIDGET_CSS_DESCRIPTION);?>
     </td>
   </tr>
+ <tr>
+   <td class="key">
+     <?php echo _JSHOP_BEGATEWAY_TRANSACTION_TYPE;?>
+   </td>
+   <td>
+     <?php
+     print JHTML::_('select.genericlist', $transaction_types, 'pm_params[transaction_type]', 'class = "inputbox" size = "1"', 'id', 'name', $params['transaction_type'] );
+     echo " ".JHTML::tooltip(_JSHOP_BEGATEWAY_TRANSACTION_TYPE_DESCRIPTION);
+     ?>
+   </td>
+ </tr>
  <tr>
    <td class="key">
      <?php echo _JSHOP_TRANSACTION_END;?>

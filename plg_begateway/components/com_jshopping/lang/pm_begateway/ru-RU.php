@@ -28,4 +28,8 @@ define('_JSHOP_BEGATEWAY_ENABLE_BANKCARD_HALVA', 'Включить оплату 
 define('_JSHOP_BEGATEWAY_ENABLE_ERIP', 'Включить оплату через ЕРИП');
 define('_JSHOP_BEGATEWAY_WIDGET_CSS', 'CSS стили виджета');
 define('_JSHOP_BEGATEWAY_WIDGET_CSS_DESCRIPTION', '');
+define('_JSHOP_BEGATEWAY_TRANSACTION_TYPE', 'Тип операции');
+define('_JSHOP_BEGATEWAY_TRANSACTION_TYPE_DESCRIPTION', '');
+define('_JSHOP_BEGATEWAY_TRANSACTION_TYPE_PAYMENT', 'Платёж');
+define('_JSHOP_BEGATEWAY_TRANSACTION_TYPE_AUTHORIZATION', 'Авторизация');
 ?>
