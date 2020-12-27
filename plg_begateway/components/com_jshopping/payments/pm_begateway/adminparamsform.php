@@ -18,15 +18,6 @@ $transaction_types[] = JHTML::_('select.option', 'authorization',_JSHOP_BEGATEWA
 <table class="admintable" width = "100%" >
  <tr>
    <td  class="key">
-     <?php echo _JSHOP_BEGATEWAY_DOMAIN_GATEWAY;?>
-   </td>
-   <td>
-     <input type = "text" class = "inputbox" name = "pm_params[domain_gateway]" size="45" value = "<?php echo $params['domain_gateway']?>" />
-     <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_DOMAIN_GATEWAY_DESCRIPTION);?>
-   </td>
- </tr>
- <tr>
-   <td  class="key">
      <?php echo _JSHOP_BEGATEWAY_DOMAIN_CHECKOUT;?>
    </td>
    <td>

@@ -1,9 +1,9 @@
 <?php
 /*
- * @version      1.6.0
- * @author       eComCharge Ltd SIA
+ * @version      2.0.0
+ * @author       eComCharge LLC
  * @package      pm_begateway
- * @copyright    Copyright (C) 2014
+ * @copyright    Copyright (C) 2020
  * @license      GNU/GPL
  */
 defined('_JEXEC') or die('Restricted access');
@@ -31,8 +31,9 @@ class pm_begateway extends PaymentRoot {
   //function call in admin
   function showAdminFormParams($params){
     $array_params = array(
-      'domain_gateway', 'domain_checkout', 'shop_id', 'shop_secret_key',
-      'transaction_end_status', 'transaction_pending_status',
+      'domain_checkout', 'shop_id', 'shop_secret_key', 'shop_public_key',
+      'widget_css',
+      'transaction_end_status', 'transaction_pending_status', 'transaction_type',
       'transaction_failed_status',
       'test_mode', 'enable_bankcard', 'enable_bankcard_halva', 'enable_erip'
     );
@@ -43,6 +44,10 @@ class pm_begateway extends PaymentRoot {
     if (!isset($params['enable_bankcard'])) {
       $params['enable_bankcard'] = 1;
     }
+    if (!isset($params['transaction_type'])) {
+      $params['transaction_type'] = 'payment';
+    }
+    
     foreach ($array_params as $key){
       if (!isset($params[$key])) $params[$key] = '';
     }
@@ -53,18 +58,15 @@ class pm_begateway extends PaymentRoot {
   function checkTransaction($pmconfigs, $order, $act){
     $jshopConfig = JSFactory::getConfig();
 
-    if ($act == 'return') {
-      if ($this->_verify_request == null) {
-        $this->_query_pm($pmconfigs,JFactory::getApplication()->input->get('uid','0','STRING'));
-      }
+    if ($act != 'notify') {
+      return;
     }
-    if ($act == 'notify') {
-      $this->_init_pm($pmconfigs);
-      $this->_verify_request = new \BeGateway\Webhook();
-      if (!$this->_verify_request->isAuthorized()) {
-        $this->sendToLog("Status pending. Order ID ".$order->order_id.". Webhook authorization error.");
-        return array(0, 'Error to authorize webhook. Order ID: '.$order->order_id);
-      }
+
+    $this->_init_pm($pmconfigs);
+    $this->_verify_request = new \BeGateway\Webhook();
+    if (!$this->_verify_request->isAuthorized()) {
+      $this->sendToLog("Status pending. Order ID ".$order->order_id.". Webhook authorization error.");
+      return array(0, 'Error to authorize webhook. Order ID: '.$order->order_id);
     }
 
     $verify_request = $this->_verify_request;
@@ -78,22 +80,17 @@ class pm_begateway extends PaymentRoot {
     }
 
     if ($tracking_id_parts[1] != $order->order_total) {
-      $this->sendToLog("Status pending. Order ID ".$order->order_id.". Error amount.");
+      $this->sendToLog("Status pending. Order ID ".$order->order_id.". Amount mismatch.");
       $errors += 1;
     }
 
     if ($tracking_id_parts[2] != $order->currency_code_iso) {
-      $this->sendToLog("Status pending. Order ID ".$order->order_id.". Error currency.");
-      $errors += 1;
-    }
-
-    if ($act == 'return' && $verify_request->getStatus() != JFactory::getApplication()->input->get('status','0','STRING')) {
-      $this->sendToLog("Status pending. Order ID ".$order->order_id.". Error status.");
+      $this->sendToLog("Status pending. Order ID ".$order->order_id.". Currency mismatch.");
       $errors += 1;
     }
 
     if ($tracking_id_parts[0] != $order->order_id) {
-      $this->sendToLog("Status pending. Order ID ".$order->order_id.". Error order id.");
+      $this->sendToLog("Status pending. Order ID ".$order->order_id.". Order Id mismatch.");
       $errors += 1;
     }
 
@@ -122,7 +119,7 @@ class pm_begateway extends PaymentRoot {
       return array(3, 'Status Failed. Order ID ' . $order->order_id, $verify_request->getUid());
     }
 
-    if ($verify_request->isIncomplete()) {
+    if ($verify_request->isIncomplete() || $verify_request->isPending()) {
       return array(2, 'Status Pending. Order ID ' . $order->order_id, $verify_request->getUid());
     }
 
@@ -135,10 +132,10 @@ class pm_begateway extends PaymentRoot {
 
     $uri = JURI::getInstance();
 
-    $notify_url = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=notify&js_paymentclass=pm_begateway&no_lang=1";
-    $notify_url = str_replace('carts.local', 'webhook.begateway.com:8443', $notify_url);
+    $notify_url = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=notify&js_paymentclass=pm_begateway&no_lang=1&order_id={$order->order_id}";
+    $notify_url = str_replace('0.0.0.0', 'webhook.begateway.com:8443', $notify_url);
 
-    $return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=return&js_paymentclass=pm_begateway";
+    $return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=return&js_paymentclass=pm_begateway&order_id={$order->order_id}";
     $cancel_return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=cancel&js_paymentclass=pm_begateway";
     $cancel_return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step5&act=cancel&js_paymentclass=pm_begateway";
 
@@ -161,6 +158,10 @@ class pm_begateway extends PaymentRoot {
     $token->setFailUrl($cancel_return);
     $token->setCancelUrl($cancel_return);
     $token->setTestMode($pmconfigs['test_mode'] == 1);
+
+    if ($pmconfigs['transaction_type'] == 'authorization') {
+      $token->setAuthorizationTransactionType();
+    }
 
     if ($pmconfigs['enable_bankcard'] == 1) {
       $cc = new \BeGateway\PaymentMethod\CreditCard;
@@ -193,8 +194,16 @@ class pm_begateway extends PaymentRoot {
     if (in_array($country, array('US', 'CA') )) {
       $token->customer->setState($order->d_state);
     }
-    $response = $token->submit();
 
+    $data = JApplicationHelper::parseXMLInstallFile($jshopConfig->admin_path."jshopping.xml");
+    $token->additional_data->setMeta(
+      [
+        'cms' => 'JoomShopping',
+        'version'   => $data['version']
+      ]
+    );
+
+    $response = $token->submit();
 ?>
         <html>
         <head>
@@ -203,14 +212,38 @@ class pm_begateway extends PaymentRoot {
         <body>
 <?php
     if ($response->isSuccess()) {
+      $url = explode('.', trim($pmconfigs['domain_checkout']));
+      $url[0] = 'js';
+      $url = 'https://' . implode('.', $url) . '/widget/be_gateway.js';
+
+      // save token along with payment params
+      $pm_params = $order->getPaymentParamsData();
+      $pm_params['begateway_payment_token'] = $response->getToken();
+      $order->setPaymentParamsData($pm_params);
+      $order->store();
+
 ?>
-        <form id="paymentform" action="<?php echo $response->getRedirectUrlScriptName(); ?>" name = "paymentform" method = "post">
-          <input type='hidden' name='token' value='<?php print $response->getToken(); ?>'>
-        </form>
-        <?php print _JSHOP_REDIRECT_TO_PAYMENT_PAGE?>
-        <br>
-        <script type="text/javascript">document.getElementById('paymentform').submit();</script>
+<script src="<?php echo $url; ?>"></script>
+<script>
+  this.start_begateway_payment = function () {
+    var params = {
+      checkout_url: "<?= \BeGateway\Settings::$checkoutBase; ?>",
+      token: "<?php echo $response->getToken(); ?>",
+      style: {
+        <?php echo $pmconfigs['widget_css']; ?>
+      },
+      closeWidget: function(status) {
+        if (status == null) {
+          window.location.replace("<?= $cancel_url ?>");
+        }
+      }
+    };
+    new BeGateway(params).createWidget();
+  };
+  window.onload = start_begateway_payment();
+ </script>
 <?php
+      print _JSHOP_REDIRECT_TO_PAYMENT_PAGE;
     } else {
       print _JSHOP_ERROR_PAYMENT . ': ' . $response->getMessage();
     }
@@ -221,39 +254,20 @@ class pm_begateway extends PaymentRoot {
     die();
   }
 
-  function _query_pm($pmconfigs,$uid) {
-    $this->_init_pm($pmconfigs);
-    $query = new \BeGateway\QueryByUid();
-    $query->setUid($uid);
-    $this->_verify_request = $query->submit();
-  }
-
   function _init_pm($pmconfigs) {
     \BeGateway\Settings::$gatewayBase = 'https://' . $pmconfigs['domain_gateway'];
     \BeGateway\Settings::$checkoutBase = 'https://' . $pmconfigs['domain_checkout'];
     \BeGateway\Settings::$shopId = $pmconfigs['shop_id'];
     \BeGateway\Settings::$shopKey = $pmconfigs['shop_secret_key'];
+    \BeGateway\Settings::$shopPubKey = $pmconfigs['shop_public_key'];
   }
 
   function getUrlParams($pmconfigs){
     $params = array();
-    $params['order_id'] = 0;
-    if ($this->_verify_request == null) {
-      $uid = JFactory::getApplication()->input->get('uid','0','STRING');
-      if ($uid != '0') {
-        # try to query by UID
-        $this->_query_pm($pmconfigs,JFactory::getApplication()->input->get('uid','0','STRING'));
-        $params['order_id'] = $this->_verify_request->getTrackingId();
-      }else{
-        # try to process webhook
-        $this->_init_pm($pmconfigs);
-        $this->_verify_request = new \BeGateway\Webhook();
-        $params['order_id'] = $this->_verify_request->getTrackingId();
-      }
-    }
+    $params['order_id'] = JFactory::getApplication()->input->getInt('order_id');
     $params['hash'] = "";
     $params['checkHash'] = 0;
-    $params['checkReturnParams'] = $pmconfigs['checkdatareturn'];
+    $params['checkReturnParams'] = 0;
     return $params;
   }
 }

@@ -9,7 +9,6 @@
 defined('_JEXEC') or die('Restricted access');
 
 define('_JSHOP_BEGATEWAY_TEST_ORDER', 'Тестовый платёж');
-define('_JSHOP_BEGATEWAY_DOMAIN_GATEWAY', 'Домен платёжного шлюза');
 define('_JSHOP_BEGATEWAY_DOMAIN_CHECKOUT', 'Домен страницы оплаты');
 define('_JSHOP_BEGATEWAY_SHOP_ID', 'Id магазина');
 define('_JSHOP_BEGATEWAY_SHOP_SECRET_KEY', 'Секретный ключ магазина');
@@ -20,7 +19,6 @@ define('_JSHOP_BEGATEWAY_TRANSACTION_FAILED_DESCRIPTION','Статус зака�
 define('_JSHOP_BEGATEWAY_SHOP_ID_DESCRIPTION', '');
 define('_JSHOP_BEGATEWAY_SHOP_SECRET_KEY_DESCRIPTION', '');
 define('_JSHOP_BEGATEWAY_SHOP_PUBLIC_KEY_DESCRIPTION', '');
-define('_JSHOP_BEGATEWAY_DOMAIN_GATEWAY_DESCRIPTION', '');
 define('_JSHOP_BEGATEWAY_DOMAIN_CHECKOUT_DESCRIPTION', '');
 define('_JSHOP_BEGATEWAY_TEST_MODE', 'Включить тестовый режим');
 define('_JSHOP_BEGATEWAY_ENABLE_BANKCARD', 'Включить оплату банковскими картами');
