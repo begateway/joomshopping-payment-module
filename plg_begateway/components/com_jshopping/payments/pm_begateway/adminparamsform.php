@@ -1,25 +1,21 @@
 <?php
 /**
- * @version      1.00
- * @author       eComCharge Ltd SIA
+ * @version      2.0.0
+ * @author       eComCharge LLC
  * @package      pm_begateway
- * @copyright    Copyright (C) 2014
+ * @copyright    Copyright (C) 2020
  * @license      GNU/GPL
  */
 defined('_JEXEC') or die('Restricted access');
+
+$transaction_types = array();
+$transaction_types[] = JHTML::_('select.option', 'payment',_JSHOP_BEGATEWAY_TRANSACTION_TYPE_PAYMENT, 'id', 'name');
+$transaction_types[] = JHTML::_('select.option', 'authorization',_JSHOP_BEGATEWAY_TRANSACTION_TYPE_AUTHORIZATION, 'id', 'name');
+
 ?>
 <div class="col100">
 <fieldset class="adminform">
 <table class="admintable" width = "100%" >
- <tr>
-   <td  class="key">
-     <?php echo _JSHOP_BEGATEWAY_DOMAIN_GATEWAY;?>
-   </td>
-   <td>
-     <input type = "text" class = "inputbox" name = "pm_params[domain_gateway]" size="45" value = "<?php echo $params['domain_gateway']?>" />
-     <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_DOMAIN_GATEWAY_DESCRIPTION);?>
-   </td>
- </tr>
  <tr>
    <td  class="key">
      <?php echo _JSHOP_BEGATEWAY_DOMAIN_CHECKOUT;?>
@@ -47,6 +43,35 @@ defined('_JEXEC') or die('Restricted access');
       <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_SHOP_SECRET_KEY_DESCRIPTION);?>
     </td>
   </tr>
+  <tr>
+    <td  class="key">
+      <?php echo _JSHOP_BEGATEWAY_SHOP_PUBLIC_KEY;?>
+    </td>
+    <td>
+      <input type = "text" class = "inputbox" name = "pm_params[shop_public_key]" size="45" value = "<?php echo $params['shop_public_key']?>" />
+      <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_SHOP_PUBLIC_KEY_DESCRIPTION);?>
+    </td>
+  </tr>
+  <tr>
+    <td  class="key">
+      <?php echo _JSHOP_BEGATEWAY_WIDGET_CSS;?>
+    </td>
+    <td>
+      <input type = "text" class = "inputbox" name = "pm_params[widget_css]" size="45" value = "<?php echo $params['widget_css']?>" />
+      <?php echo JHTML::tooltip(_JSHOP_BEGATEWAY_WIDGET_CSS_DESCRIPTION);?>
+    </td>
+  </tr>
+ <tr>
+   <td class="key">
+     <?php echo _JSHOP_BEGATEWAY_TRANSACTION_TYPE;?>
+   </td>
+   <td>
+     <?php
+     print JHTML::_('select.genericlist', $transaction_types, 'pm_params[transaction_type]', 'class = "inputbox" size = "1"', 'id', 'name', $params['transaction_type'] );
+     echo " ".JHTML::tooltip(_JSHOP_BEGATEWAY_TRANSACTION_TYPE_DESCRIPTION);
+     ?>
+   </td>
+ </tr>
  <tr>
    <td class="key">
      <?php echo _JSHOP_TRANSACTION_END;?>
@@ -107,16 +132,6 @@ defined('_JEXEC') or die('Restricted access');
    <td>
      <?php
      print JHTML::_('select.booleanlist', 'pm_params[enable_erip]', 'class = "inputbox"', $params['enable_erip']);
-     ?>
-   </td>
- </tr>
- <tr>
-   <td class="key">
-     <?php echo _JSHOP_BEGATEWAY_CHECK_DATA_RETURN;?>
-   </td>
-   <td>
-     <?php
-     print JHTML::_('select.booleanlist', 'pm_params[checkdatareturn]', 'class = "inputbox"', $params['checkdatareturn']);
      ?>
    </td>
  </tr>

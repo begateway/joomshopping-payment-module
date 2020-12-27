@@ -4,10 +4,10 @@
 
 ## System requirements
 
-* PHP 5.3+
+* PHP 5.6+
 * [cURL extension](http://php.net/manual/en/book.curl.php)
-* [Joomla](http://www.joomla.org/download.html) 3.x (the module was tested with version 3.4.8)
-* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x (the module was tested with version 4.11.3)
+* [Joomla](http://www.joomla.org/download.html) 3.x (the module was tested with version 3.9.22)
+* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x (the module was tested with version 4.18.5)
 
 ## The module installation
 
@@ -65,14 +65,152 @@ If you setup the module with values as follows:
   * Payment page domain __checkout.begateway.com__
   * Shop Id __361__
   * Shop secret key __b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d__
+  * Shop public key __MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArO7bNKtnJgCn0PJVn2X7QmhjGQ2GNNw412D+NMP4y3Qs69y6i5T/zJBQAHwGKLwAxyGmQ2mMpPZCk4pT9HSIHwHiUVtvdZ/78CX1IQJON/Xf22kMULhquwDZcy3Cp8P4PBBaQZVvm7v1FwaxswyLD6WTWjksRgSH/cAhQzgq6WC4jvfWuFtn9AchPf872zqRHjYfjgageX3uwo9vBRQyXaEZr9dFR+18rUDeeEzOEmEP+kp6/Pvt3ZlhPyYm/wt4/fkk9Miokg/yUPnk3MDU81oSuxAw8EHYjLfF59SWQpQObxMaJR68vVKH32Ombct2ZGyzM7L5Tz3+rkk7C4z9oQIDAQAB__
+  * Check __Enable test mode__
 
-Then you can use the test data to make a test payment:
+Use the following test card to make successful test payment:
 
-* card number __4200000000000000__
-* card name __John Doe__
-* card expiry month __01__ to get a success payment
-* card expiry month __10__ to get a failed payment
-* CVC __123__
+  * Card number: 4200000000000000
+  * Name on card: JOHN DOE
+  * Card expiry date: 01/30
+  * CVC: 123
+
+Use the following test card to make failed test payment:
+
+  * Card number: 4005550000000019
+  * Name on card: JOHN DOE
+  * Card expiry date: 01/30
+  * CVC: 123
+
+## Widget style
+
+### Styles that are being used by the widget
+
+| Style name               |
+|--------------------------|
+| widget                   |
+| header                   |
+| headerPrice              |
+| headerDescription        |
+| headerDescriptionText    |
+| headerClose              |
+| footer                   |
+| footerText               |
+| footerLink               |
+| footerSecurity           |
+| main                     |
+| methodsMenu              |
+| methodsMenuText          |
+| methodsMenuCard          |
+| methodsMenuCardText      |
+| methodsMenuList          |
+| methodsMenuListMethod    |
+| methodsMenuGrid          |
+| methodsMenuGridMethod    |
+| cardsMenu                |
+| cardsMenuText            |
+| cardsMenuCard            |
+| cardsMenuCardText        |
+| card                     |
+| cardSides                |
+| cardFace                 |
+| cardFaceContent          |
+| cardBack                 |
+| cardBackMagneticLine     |
+| cardBackCVC              |
+| cardBackCVCText          |
+| cardBackCVCInput         |
+| cardPoints               |
+| cardCustomer             |
+| cardCustomerField        |
+| cardButton               |
+| eripContent              |
+| eripTitle                |
+| eripOrder                |
+| eripOrderTitle           |
+| eripOrderNumber          |
+| eripBanks                |
+| eripBanksTitle           |
+| eripQRCode               |
+| eripBanksComment         |
+| eripBanksLinks           |
+| eripBanksBank            |
+| eripBanksMore            |
+| paymentResult            |
+| paymentResultStatus      |
+| paymentResultStatusText  |
+| paymentResultDetails     |
+| paymentResultDetailsText |
+| paymentResultButton      |
+| method                   |
+| methodContent            |
+| methodTitle              |
+| methodForm               |
+| methodButton             |
+| methodWaiting            |
+| phoneLabel               |
+| inputGroup               |
+| inputGroupField          |
+| inputGroupSelect         |
+| stepBack                 |
+| stepBackText             |
+
+### Customizable CSS properties
+
+The widget supports only properties listed below.
+
+| Property        | Equal CSS property           |
+|-----------------|------------------------------|
+| color           | color                        |
+| backgroundColor | background-color             |
+| border          | border                       |
+| borderRadius    | border-radius                |
+| fontFamily      | font-family                  |
+| fontSize        | font-size                    |
+| fontSmoothing   | font-smoothing               |
+| fontStyle       | font-style                   |
+| fontVariant     | font-variant                 |
+| fontWeight      | font-weight                  |
+| lineHeight      | line-height                  |
+| letterSpacing   | letter-spacing               |
+| margin          | margin                       |
+| padding         | padding                      |
+| textAlign       | text-align                   |
+| textDecoration  | text-decoration              |
+| textShadow      | text-shadow                  |
+| textTransform   | text-transform               |
+
+Values of CSS properties may accept values compatible with CSS syntax.
+
+You may use a browser Developer Tools (Inspect element) to know what CSS elements are in use and how they are nested.
+
+Example
+
+```javascript
+header: {
+  backgroundColor: '#fff',
+  border: 'none'
+},
+headerPrice: {
+  color: '#fff'
+},
+footer: {
+  backgroundColor: '#fff',
+  border: 'none'
+},
+cardButton: {
+  backgroundColor: '#26d893',
+  border: 'none'
+},
+methodButton: {
+  backgroundColor: '#26d893',
+  border: 'none'
+},
+paymentResultButton: {
+  backgroundColor: '#26d893',
+  border: 'none'
+}
+```
 
 ## Contributing
 
@@ -84,10 +222,10 @@ Issue pull requests or send feature requests.
 
 ## Системные требования
 
-* PHP 5.3+
+* PHP 5.6+
 * [cURL](http://php.net/manual/en/book.curl.php)
-* [Joomla](http://www.joomla.org/download.html) 3.x (модуль был разработан и протестирован с версией 3.4.8)
-* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x (модуль был разработан и протестирован с версией 4.11.3)
+* [Joomla](http://www.joomla.org/download.html) 3.x (модуль был разработан и протестирован с версией 3.9.22)
+* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x (модуль был разработан и протестирован с версией 4.18.5)
 
 ## Установка
 
@@ -138,19 +276,154 @@ Issue pull requests or send feature requests.
 
 ## Тестовые данные
 
-Если вы настроете модуль со следующими значениями
+Настройте модуль со следующими значениями
 
   * Домен платёжного шлюза __demo-gateway.begateway.com__
   * Домен страницы оплаты __checkout.begateway.com__
   * Id магазина __361__
   * Секретный ключ магазина __b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d__
+  * Публичный ключ магазина __MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArO7bNKtnJgCn0PJVn2X7QmhjGQ2GNNw412D+NMP4y3Qs69y6i5T/zJBQAHwGKLwAxyGmQ2mMpPZCk4pT9HSIHwHiUVtvdZ/78CX1IQJON/Xf22kMULhquwDZcy3Cp8P4PBBaQZVvm7v1FwaxswyLD6WTWjksRgSH/cAhQzgq6WC4jvfWuFtn9AchPf872zqRHjYfjgageX3uwo9vBRQyXaEZr9dFR+18rUDeeEzOEmEP+kp6/Pvt3ZlhPyYm/wt4/fkk9Miokg/yUPnk3MDU81oSuxAw8EHYjLfF59SWQpQObxMaJR68vVKH32Ombct2ZGyzM7L5Tz3+rkk7C4z9oQIDAQAB__
+  * Отметьте __Включить тестовый режим модуля__
 
-то вы сможете уже
-осуществить тестовый платеж в вашем магазине. Используйте следующие
-данные тестовой карты:
+Используйте следующие данные карты для успешного тестового платежа:
 
-  * номер карты __4200000000000000__
-  * имя на карте __John Doe__
-  * месяц срока действия карты __01__, чтобы получить успешный платеж
-  * месяц срока действия карты __10__, чтобы получить неуспешный платеж
-  * CVC __123__
+  * Номер карты: 4200000000000000
+  * Имя на карте: JOHN DOE
+  * Месяц срока действия карты: 01/30
+  * CVC: 123
+
+Используйте следующие данные карты для неуспешного тестового платежа:
+
+  * Номер карты: 4005550000000019
+  * Имя на карте: JOHN DOE
+  * Месяц срока действия карты: 01/30
+  * CVC: 123
+
+## Стиль виджета
+
+### Стили, используемые в виджете
+
+| Имя стиля                |
+|--------------------------|
+| widget                   |
+| header                   |
+| headerPrice              |
+| headerDescription        |
+| headerDescriptionText    |
+| headerClose              |
+| footer                   |
+| footerText               |
+| footerLink               |
+| footerSecurity           |
+| main                     |
+| methodsMenu              |
+| methodsMenuText          |
+| methodsMenuCard          |
+| methodsMenuCardText      |
+| methodsMenuList          |
+| methodsMenuListMethod    |
+| methodsMenuGrid          |
+| methodsMenuGridMethod    |
+| cardsMenu                |
+| cardsMenuText            |
+| cardsMenuCard            |
+| cardsMenuCardText        |
+| card                     |
+| cardSides                |
+| cardFace                 |
+| cardFaceContent          |
+| cardBack                 |
+| cardBackMagneticLine     |
+| cardBackCVC              |
+| cardBackCVCText          |
+| cardBackCVCInput         |
+| cardPoints               |
+| cardCustomer             |
+| cardCustomerField        |
+| cardButton               |
+| eripContent              |
+| eripTitle                |
+| eripOrder                |
+| eripOrderTitle           |
+| eripOrderNumber          |
+| eripBanks                |
+| eripBanksTitle           |
+| eripQRCode               |
+| eripBanksComment         |
+| eripBanksLinks           |
+| eripBanksBank            |
+| eripBanksMore            |
+| paymentResult            |
+| paymentResultStatus      |
+| paymentResultStatusText  |
+| paymentResultDetails     |
+| paymentResultDetailsText |
+| paymentResultButton      |
+| method                   |
+| methodContent            |
+| methodTitle              |
+| methodForm               |
+| methodButton             |
+| methodWaiting            |
+| phoneLabel               |
+| inputGroup               |
+| inputGroupField          |
+| inputGroupSelect         |
+| stepBack                 |
+| stepBackText             |
+
+### Настраиваемые CSS свойства
+
+Никакие другие CSS свойства не поддерживаются.
+
+| Параметр        | Соответствующее CSS свойство |
+|-----------------|------------------------------|
+| color           | color                        |
+| backgroundColor | background-color             |
+| border          | border                       |
+| borderRadius    | border-radius                |
+| fontFamily      | font-family                  |
+| fontSize        | font-size                    |
+| fontSmoothing   | font-smoothing               |
+| fontStyle       | font-style                   |
+| fontVariant     | font-variant                 |
+| fontWeight      | font-weight                  |
+| lineHeight      | line-height                  |
+| letterSpacing   | letter-spacing               |
+| margin          | margin                       |
+| padding         | padding                      |
+| textAlign       | text-align                   |
+| textDecoration  | text-decoration              |
+| textShadow      | text-shadow                  |
+| textTransform   | text-transform               |
+
+Значениями CSS свойств могут быть текстовые значения совместимые с CSS синтаксисом (см. пример выше).
+Структуру html-документа виджета с используемыми стилями можно посмотреть с помощью Developer Tools браузера (Inspect element).
+
+Пример
+
+```javascript
+header: {
+  backgroundColor: '#fff',
+  border: 'none'
+},
+headerPrice: {
+  color: '#fff'
+},
+footer: {
+  backgroundColor: '#fff',
+  border: 'none'
+},
+cardButton: {
+  backgroundColor: '#26d893',
+  border: 'none'
+},
+methodButton: {
+  backgroundColor: '#26d893',
+  border: 'none'
+},
+paymentResultButton: {
+  backgroundColor: '#26d893',
+  border: 'none'
+}
+```
