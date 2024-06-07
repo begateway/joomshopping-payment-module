@@ -1,6 +1,6 @@
 <?php
 /*
- * @version      2.0.0
+ * @version      2.1.0
  * @author       eComCharge LLC
  * @package      pm_begateway
  * @copyright    Copyright (C) 2020
@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
-require_once dirname(__FILE__) . '/begateway-api-php/lib/BeGateway.php';
+require_once dirname(__FILE__) . '/begateway-api-php/BeGateway.php';
 
 class pm_begateway extends PaymentRoot {
 
@@ -16,12 +16,7 @@ class pm_begateway extends PaymentRoot {
 
   function __construct() {
     $jshopConfig = JSFactory::getConfig();
-
-    JSFactory::loadExtLanguageFile('pm_begateway');
-  }
-
-  function showPaymentForm($params, $pmconfigs){
-    include(dirname(__FILE__)."/paymentform.php");
+    $this->_loadLanguageFile();
   }
 
   static function sendToLog($message) {
@@ -128,7 +123,8 @@ class pm_begateway extends PaymentRoot {
 
   function showEndForm($pmconfigs, $order){
     $jshopConfig = JSFactory::getConfig();
-    $item_name = sprintf(_JSHOP_PAYMENT_NUMBER, $order->order_number);
+
+    $item_name = sprintf(\JText::_('JSHOP_PAYMENT_NUMBER'), $order->order_number);
 
     $uri = JURI::getInstance();
 
@@ -139,7 +135,7 @@ class pm_begateway extends PaymentRoot {
     $cancel_return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=cancel&js_paymentclass=pm_begateway";
     $cancel_return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step5&act=cancel&js_paymentclass=pm_begateway";
 
-    $_country = JTable::getInstance('country', 'jshop');
+    $_country = \JSFactory::getTable('country');
     $_country->load($order->d_country);
     $country = $_country->country_code_2;
     $language = explode('-',JFactory::getLanguage()->getTag());
@@ -195,7 +191,7 @@ class pm_begateway extends PaymentRoot {
       $token->customer->setState($order->d_state);
     }
 
-    $data = JApplicationHelper::parseXMLInstallFile($jshopConfig->admin_path."jshopping.xml");
+    $data = \JInstaller::parseXMLInstallFile($jshopConfig->admin_path."jshopping.xml");
     $token->additional_data->setMeta(
       [
         'cms' => 'JoomShopping',
@@ -212,10 +208,6 @@ class pm_begateway extends PaymentRoot {
         <body>
 <?php
     if ($response->isSuccess()) {
-      $url = explode('.', trim($pmconfigs['domain_checkout']));
-      $url[0] = 'js';
-      $url = 'https://' . implode('.', $url) . '/widget/be_gateway.js';
-
       // save token along with payment params
       $pm_params = $order->getPaymentParamsData();
       $pm_params['begateway_payment_token'] = $response->getToken();
@@ -223,29 +215,15 @@ class pm_begateway extends PaymentRoot {
       $order->store();
 
 ?>
-<script src="<?php echo $url; ?>"></script>
-<script>
-  this.start_begateway_payment = function () {
-    var params = {
-      checkout_url: "<?= \BeGateway\Settings::$checkoutBase; ?>",
-      token: "<?php echo $response->getToken(); ?>",
-      style: {
-        <?php echo $pmconfigs['widget_css']; ?>
-      },
-      closeWidget: function(status) {
-        if (status == null) {
-          window.location.replace("<?= $cancel_url ?>");
-        }
-      }
-    };
-    new BeGateway(params).createWidget();
-  };
-  window.onload = start_begateway_payment();
- </script>
+ <form id="paymentform" action="<?php print $response->getRedirectUrlScriptName();?>" name = "paymentform" method = "get">
+ <input type='hidden' name='token' value='<?php print $response->getToken(); ?>'>
+</form>
+<script type="text/javascript">document.getElementById('paymentform').submit();</script>
+
 <?php
-      print _JSHOP_REDIRECT_TO_PAYMENT_PAGE;
+      print \JText::_('JSHOP_REDIRECT_TO_PAYMENT_PAGE');
     } else {
-      print _JSHOP_ERROR_PAYMENT . ': ' . $response->getMessage();
+      print \JText::_('JSHOP_ERROR_PAYMENT') . ': ' . $response->getMessage();
     }
 ?>
         </body>
@@ -259,16 +237,25 @@ class pm_begateway extends PaymentRoot {
     \BeGateway\Settings::$checkoutBase = 'https://' . $pmconfigs['domain_checkout'];
     \BeGateway\Settings::$shopId = $pmconfigs['shop_id'];
     \BeGateway\Settings::$shopKey = $pmconfigs['shop_secret_key'];
-    \BeGateway\Settings::$shopPubKey = $pmconfigs['shop_public_key'];
   }
 
-  function getUrlParams($pmconfigs){
+  function getUrlParams($pmconfigs) {
     $params = array();
     $params['order_id'] = JFactory::getApplication()->input->getInt('order_id');
     $params['hash'] = "";
     $params['checkHash'] = 0;
     $params['checkReturnParams'] = 0;
     return $params;
+  }
+
+  private function _loadLanguageFile() {
+    $lang    = JFactory::getLanguage();
+    $langTag = $lang->getTag();
+    if (file_exists(JPATH_ROOT.'/components/com_jshopping/payments/pm_begateway/lang/'.$langTag.'.php')) {
+        require_once(JPATH_ROOT.'/components/com_jshopping/payments/pm_begateway/lang/'.$langTag.'.php');
+    } else {
+        require_once(JPATH_ROOT.'/components/com_jshopping/payments/pm_begateway/lang/en-GB.php');
+    }
   }
 }
 ?>
