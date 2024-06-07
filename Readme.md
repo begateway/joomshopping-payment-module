@@ -11,7 +11,7 @@
 
 ## The module installation
 
-1. [Download joomshopping-begateway.zip](https://github.com/beGateway/joomshopping-payment-module/blob/master/joomshopping-begateway.zip?raw=true)
+1. Download the latest version of the plugin [joomshopping-begateway.zip](https://github.com/begateway/joomshopping-payment-module/releases)
 2. Go to Joomla's administration panel
 3. Go to extension manager for JoomShopping (arrow #1)
   ![go to extension manager](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/go_to_extensions_manager.png)
@@ -227,7 +227,7 @@ Issue pull requests or send feature requests.
 
 ## Установка
 
-1. [Скачайте joomshopping-begateway.zip](https://github.com/beGateway/joomshopping-payment-module/blob/master/joomshopping-begateway.zip?raw=true)
+1. Скачайте последнюю версию модуля [joomshopping-begateway.zip](https://github.com/begateway/joomshopping-payment-module/releases)
 2. Зайдите в панель администратора Joomla
 3. Через меню _Компоненты_ перейдите в JoomShopping _Установка и обновление_ (стрелка #1)
   ![go to extension manager](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/go_to_extensions_manager.png)
