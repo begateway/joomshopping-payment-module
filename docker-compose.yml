@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  joomla:
+    build:
+      context: ./docker/
+      args:
+        joomla: "4.4.5-php8.2-apache"
+    ports:
+      - 80:80
+    environment:
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_USER: joomla
+      JOOMLA_DB_PASSWORD: joomlajoomla123#J
+      JOOMLA_DB_NAME: joomla_db
+    volumes:
+      - ./plg_begateway:/plg_begateway
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: joomla_db
+      MYSQL_USER: joomla
+      MYSQL_PASSWORD: joomlajoomla123#J
+      MYSQL_ROOT_PASSWORD: joomlajoomla123#J

@@ -1,13 +1,13 @@
 [Русская версия](#Модуль-оплаты-begateway-для-joomla-3x-и-joomshopping-4x)
 
-# beGateway payment module for Joomla 3.x and JoomShopping 4.x
+# beGateway payment module for Joomla 3.x and JoomShopping 4.x/5.x
 
 ## System requirements
 
 * PHP 5.6+
 * [cURL extension](http://php.net/manual/en/book.curl.php)
 * [Joomla](http://www.joomla.org/download.html) 3.x (the module was tested with version 3.9.22)
-* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x (the module was tested with version 4.18.5)
+* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x/5.x (the module was tested with version 4.18.5/5.4.0)
 
 ## The module installation
 
@@ -61,11 +61,9 @@
 
 If you setup the module with values as follows:
 
-  * Payment gateway domain __demo-gateway.begateway.com__
   * Payment page domain __checkout.begateway.com__
   * Shop Id __361__
   * Shop secret key __b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d__
-  * Shop public key __MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArO7bNKtnJgCn0PJVn2X7QmhjGQ2GNNw412D+NMP4y3Qs69y6i5T/zJBQAHwGKLwAxyGmQ2mMpPZCk4pT9HSIHwHiUVtvdZ/78CX1IQJON/Xf22kMULhquwDZcy3Cp8P4PBBaQZVvm7v1FwaxswyLD6WTWjksRgSH/cAhQzgq6WC4jvfWuFtn9AchPf872zqRHjYfjgageX3uwo9vBRQyXaEZr9dFR+18rUDeeEzOEmEP+kp6/Pvt3ZlhPyYm/wt4/fkk9Miokg/yUPnk3MDU81oSuxAw8EHYjLfF59SWQpQObxMaJR68vVKH32Ombct2ZGyzM7L5Tz3+rkk7C4z9oQIDAQAB__
   * Check __Enable test mode__
 
 Use the following test card to make successful test payment:
@@ -218,14 +216,14 @@ Issue pull requests or send feature requests.
 
 [English version](#begateway-payment-module-for-joomla-3x-and-joomshopping-4x)
 
-# Модуль оплаты beGateway для Joomla 3.x и JoomShopping 4.x
+# Модуль оплаты beGateway для Joomla 3.x и JoomShopping 4.x/5.x
 
 ## Системные требования
 
 * PHP 5.6+
 * [cURL](http://php.net/manual/en/book.curl.php)
 * [Joomla](http://www.joomla.org/download.html) 3.x (модуль был разработан и протестирован с версией 3.9.22)
-* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x (модуль был разработан и протестирован с версией 4.18.5)
+* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x/5.x (модуль был разработан и протестирован с версией 4.18.5/5.4.0)
 
 ## Установка
 
@@ -278,11 +276,9 @@ Issue pull requests or send feature requests.
 
 Настройте модуль со следующими значениями
 
-  * Домен платёжного шлюза __demo-gateway.begateway.com__
   * Домен страницы оплаты __checkout.begateway.com__
   * Id магазина __361__
   * Секретный ключ магазина __b8647b68898b084b836474ed8d61ffe117c9a01168d867f24953b776ddcb134d__
-  * Публичный ключ магазина __MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArO7bNKtnJgCn0PJVn2X7QmhjGQ2GNNw412D+NMP4y3Qs69y6i5T/zJBQAHwGKLwAxyGmQ2mMpPZCk4pT9HSIHwHiUVtvdZ/78CX1IQJON/Xf22kMULhquwDZcy3Cp8P4PBBaQZVvm7v1FwaxswyLD6WTWjksRgSH/cAhQzgq6WC4jvfWuFtn9AchPf872zqRHjYfjgageX3uwo9vBRQyXaEZr9dFR+18rUDeeEzOEmEP+kp6/Pvt3ZlhPyYm/wt4/fkk9Miokg/yUPnk3MDU81oSuxAw8EHYjLfF59SWQpQObxMaJR68vVKH32Ombct2ZGyzM7L5Tz3+rkk7C4z9oQIDAQAB__
   * Отметьте __Включить тестовый режим модуля__
 
 Используйте следующие данные карты для успешного тестового платежа:
