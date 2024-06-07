@@ -9,7 +9,7 @@
         "joomshopping"
     ],
     "config": {
-        "vendor-dir": "./plg_begateway/vendor"
+        "vendor-dir": "./plg_begateway/components/com_jshopping/payments/pm_begateway/vendor"
     },
     "license": "MIT",
     "authors": [
