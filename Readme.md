@@ -6,7 +6,7 @@
 
 * PHP 5.6+
 * [cURL extension](http://php.net/manual/en/book.curl.php)
-* [Joomla](http://www.joomla.org/download.html) 3.x (the module was tested with version 3.9.22)
+* [Joomla](http://www.joomla.org/download.html) 4.x (the module was tested with version 4.4.5)
 * [JoomShopping](http://joomshopping.pro/download/component.html) 4.x/5.x (the module was tested with version 4.18.5/5.4.0)
 
 ## The module installation
@@ -222,7 +222,7 @@ Issue pull requests or send feature requests.
 
 * PHP 5.6+
 * [cURL](http://php.net/manual/en/book.curl.php)
-* [Joomla](http://www.joomla.org/download.html) 3.x (модуль был разработан и протестирован с версией 3.9.22)
+* [Joomla](http://www.joomla.org/download.html) 4.x (модуль был разработан и протестирован с версией 4.4.5)
 * [JoomShopping](http://joomshopping.pro/download/component.html) 4.x/5.x (модуль был разработан и протестирован с версией 4.18.5/5.4.0)
 
 ## Установка
