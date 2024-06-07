@@ -6,7 +6,6 @@ services:
       context: ./docker/
       args:
         joomla: "4.4.5-php8.2-apache"
-        joomshopping_version: "5.1.1"
     ports:
       - 80:80
     environment:
@@ -15,8 +14,6 @@ services:
       JOOMLA_DB_PASSWORD: joomlajoomla123#J
       JOOMLA_DB_NAME: joomla_db
     volumes:
-      #- ./plg_begateway/components/com_jshopping/payments/pm_begateway:/var/www/html/components/com_jshopping/payments/pm_begateway
-      #- ./plg_begateway/components/com_jshopping/lang/pm_begateway:/var/www/html/components/com_jshopping/lang/pm_begateway
       - ./plg_begateway:/plg_begateway
 
   db:
