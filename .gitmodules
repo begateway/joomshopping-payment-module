@@ -1,3 +1,0 @@
-[submodule "plg_begateway/components/com_jshopping/payments/pm_begateway/begateway-api-php"]
-	path = plg_begateway/components/com_jshopping/payments/pm_begateway/begateway-api-php
-	url = https://github.com/beGateway/begateway-api-php.git

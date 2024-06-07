@@ -8,7 +8,7 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
-require_once dirname(__FILE__) . '/begateway-api-php/BeGateway.php';
+require_once dirname(__FILE__) . '/vendor/autoload.php';
 
 class pm_begateway extends PaymentRoot {
 

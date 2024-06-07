@@ -1,0 +1,24 @@
+{
+    "name": "begateway/joomshopping-payment-module",
+    "description": "BeGateway Payment Gateway for JoomShopping",
+    "keywords": [
+        "begateway",
+        "payment processing",
+        "api",
+        "joomla",
+        "joomshopping"
+    ],
+    "config": {
+        "vendor-dir": "./plg_begateway/vendor"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "BeGateway",
+            "email": "admin@begateway.com"
+        }
+    ],
+    "require": {
+        "begateway/begateway-api-php": ">=5.1.0"
+    }
+}
