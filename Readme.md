@@ -1,4 +1,4 @@
-[Русская версия](#Модуль-оплаты-begateway-для-joomla-3x-и-joomshopping-4x)
+[Русская версия](#Модуль-оплаты-begateway-для-joomla-3x-и-joomshopping-4x5x)
 
 # beGateway payment module for Joomla 3.x and JoomShopping 4.x/5.x
 
@@ -214,7 +214,7 @@ paymentResultButton: {
 
 Issue pull requests or send feature requests.
 
-[English version](#begateway-payment-module-for-joomla-3x-and-joomshopping-4x)
+[English version](#begateway-payment-module-for-joomla-3x-and-joomshopping-4x5x)
 
 # Модуль оплаты beGateway для Joomla 3.x и JoomShopping 4.x/5.x
 
