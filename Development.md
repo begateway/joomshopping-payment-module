@@ -47,7 +47,8 @@ docker-compose exec joomla bash
 Execute the shell command to create a symlink to mounted plugin volume
 
 ```
-ln -fs /plg_begateway/components/com_jshopping/payments/pm_begateway /var/www/html/components/com_jshopping/payments/pm_begateway
+rm -rf /var/www/html/components/com_jshopping/payments/pm_begateway
+ln -fs /plg_begateway/components/com_jshopping/payments/pm_begateway /var/www/html/components/com_jshopping/payments/
 ```
 
 # Configure payment plugin
@@ -55,3 +56,13 @@ ln -fs /plg_begateway/components/com_jshopping/payments/pm_begateway /var/www/ht
 Open the link http://0.0.0.0/administrator/index.php?option=com_jshopping&controller=payments in a browser.
 
 Edit and enable the payment method with the `begateway` code.
+
+# Translation
+
+Install a language pack using the menu System -> Languages. 
+
+If the JoomShopping menu items in the admin panel hasn't been translated after that, then copy the language ini-file manually e.g.
+
+```
+cp administrator/components/com_jshopping/language/ru-RU.com_jshopping.sys.ini administrator/language/ru-RU/
+```
