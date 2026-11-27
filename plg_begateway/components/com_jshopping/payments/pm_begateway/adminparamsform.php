@@ -1,7 +1,7 @@
 <?php
 /**
  * @version      3.0.0
- * @author       eComCharge LLC
+ * @author       eComCharge
  * @package      pm_begateway
  * @copyright    Copyright (C) 2020
  * @license      GNU/GPL
