@@ -1,11 +1,18 @@
 <?php
 /*
- * @version      2.1.0
- * @author       eComCharge LLC
+ * @version      3.0.0
+ * @author       eComCharge
  * @package      pm_begateway
  * @copyright    Copyright (C) 2020
  * @license      GNU/GPL
  */
+use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Component\Jshopping\Site\Helper\Helper;
+use Joomla\Component\Jshopping\Site\Lib\JSFactory;
+
 defined('_JEXEC') or die('Restricted access');
 
 require_once dirname(__FILE__) . '/vendor/autoload.php';
@@ -20,7 +27,7 @@ class pm_begateway extends PaymentRoot {
   }
 
   static function sendToLog($message) {
-    saveToLog("payment.log", $message);
+    Helper::saveToLog("payment.log", $message);
   }
 
   //function call in admin
@@ -46,7 +53,7 @@ class pm_begateway extends PaymentRoot {
     foreach ($array_params as $key){
       if (!isset($params[$key])) $params[$key] = '';
     }
-    $orders = JModelLegacy::getInstance('orders', 'JshoppingModel'); //admin model
+    $orders = JSFactory::getModel('orders'); //admin model
     include(dirname(__FILE__)."/adminparamsform.php");
   }
 
@@ -124,21 +131,17 @@ class pm_begateway extends PaymentRoot {
   function showEndForm($pmconfigs, $order){
     $jshopConfig = JSFactory::getConfig();
 
-    $item_name = sprintf(\JText::_('JSHOP_PAYMENT_NUMBER'), $order->order_number);
+    $item_name = sprintf(Text::_('JSHOP_PAYMENT_NUMBER'), $order->order_number);
 
-    $uri = JURI::getInstance();
+    $notify_url = Uri::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=notify&js_paymentclass=pm_begateway&no_lang=1&order_id={$order->order_id}";
 
-    $notify_url = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=notify&js_paymentclass=pm_begateway&no_lang=1&order_id={$order->order_id}";
-    $notify_url = str_replace('0.0.0.0', 'webhook.begateway.com:8443', $notify_url);
+    $return = Uri::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=return&js_paymentclass=pm_begateway&order_id={$order->order_id}";
+    $cancel_return = Uri::root()."index.php?option=com_jshopping&controller=checkout&task=step5&act=cancel&js_paymentclass=pm_begateway";
 
-    $return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=return&js_paymentclass=pm_begateway&order_id={$order->order_id}";
-    $cancel_return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step7&act=cancel&js_paymentclass=pm_begateway";
-    $cancel_return = JURI::root()."index.php?option=com_jshopping&controller=checkout&task=step5&act=cancel&js_paymentclass=pm_begateway";
-
-    $_country = \JSFactory::getTable('country');
+    $_country = JSFactory::getTable('country');
     $_country->load($order->d_country);
     $country = $_country->country_code_2;
-    $language = explode('-',JFactory::getLanguage()->getTag());
+    $language = explode('-',Factory::getApplication()->getLanguage()->getTag());
     $language = $language[0];
 
     $this->_init_pm($pmconfigs);
@@ -191,7 +194,7 @@ class pm_begateway extends PaymentRoot {
       $token->customer->setState($order->d_state);
     }
 
-    $data = \JInstaller::parseXMLInstallFile($jshopConfig->admin_path."jshopping.xml");
+    $data = Installer::parseXMLInstallFile($jshopConfig->admin_path."jshopping.xml");
     $token->additional_data->setMeta(
       [
         'cms' => 'JoomShopping',
@@ -221,9 +224,9 @@ class pm_begateway extends PaymentRoot {
 <script type="text/javascript">document.getElementById('paymentform').submit();</script>
 
 <?php
-      print \JText::_('JSHOP_REDIRECT_TO_PAYMENT_PAGE');
+      print Text::_('JSHOP_REDIRECT_TO_PAYMENT_PAGE');
     } else {
-      print \JText::_('JSHOP_ERROR_PAYMENT') . ': ' . $response->getMessage();
+      print Text::_('JSHOP_ERROR_PAYMENT') . ': ' . $response->getMessage();
     }
 ?>
         </body>
@@ -233,7 +236,7 @@ class pm_begateway extends PaymentRoot {
   }
 
   function _init_pm($pmconfigs) {
-    \BeGateway\Settings::$gatewayBase = 'https://' . $pmconfigs['domain_gateway'];
+    \BeGateway\Settings::$gatewayBase = 'https://' . ($pmconfigs['domain_gateway'] ?? 'gateway.begateway.com');
     \BeGateway\Settings::$checkoutBase = 'https://' . $pmconfigs['domain_checkout'];
     \BeGateway\Settings::$shopId = $pmconfigs['shop_id'];
     \BeGateway\Settings::$shopKey = $pmconfigs['shop_secret_key'];
@@ -241,7 +244,7 @@ class pm_begateway extends PaymentRoot {
 
   function getUrlParams($pmconfigs) {
     $params = array();
-    $params['order_id'] = JFactory::getApplication()->input->getInt('order_id');
+    $params['order_id'] = Factory::getApplication()->input->getInt('order_id');
     $params['hash'] = "";
     $params['checkHash'] = 0;
     $params['checkReturnParams'] = 0;
@@ -249,7 +252,7 @@ class pm_begateway extends PaymentRoot {
   }
 
   private function _loadLanguageFile() {
-    $lang    = JFactory::getLanguage();
+    $lang    = Factory::getApplication()->getLanguage();
     $langTag = $lang->getTag();
     if (file_exists(JPATH_ROOT.'/components/com_jshopping/payments/pm_begateway/lang/'.$langTag.'.php')) {
         require_once(JPATH_ROOT.'/components/com_jshopping/payments/pm_begateway/lang/'.$langTag.'.php');
