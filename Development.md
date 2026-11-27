@@ -1,68 +1,72 @@
-# Install Joomla
+# Local Joomla 6 / PHP 8.5 development
 
-Use `docker-compose` to run the Joomla CMS. Set the `joomla` argument value in `docker-compose.yml` to select the Joomla version. Refer to https://hub.docker.com/_/joomla for version tags.
+The Dockerfile builds Joomla 6.2.1 on PHP 8.5 with the required PHP extensions.
 
-Run
-
-```
-docker-compose build
-docker-compose up
+```sh
+docker compose build
+docker compose up -d
 ```
 
-to up Joompla's containers.
+Open http://localhost:8080 and install Joomla. Database host: `db`, database:
+`joomla_db`, user: `joomla`, password: the `JOOMLA_DB_PASSWORD` in
+`docker-compose.yml`. These credentials are for local development only.
 
-Open http://0.0.0.0 in a browser to install Joomla. Use environment variables from the `db` container for database parameters.
+Download [JoomShopping 5.10.0](https://www.webdesigner-profi.de/joomla-webdesign/joomla-shop/downloads/JoomShopping-5.10.0.zip.html?lang=en)
+and install it through Joomla's extension installer. Disable **Behaviour - Backward
+Compatibility 6** to ensure the payment module works without legacy aliases.
 
-## Enable debug mode
+## Install and configure the module
 
-Open http://0.0.0.0/administrator/index.php?option=com_config and select the System tab. Enable the Debug System option to see your code errors.
-
-# Install Joomshopping
-
-Download a Joomshopping package from https://www.webdesigner-profi.de/joomla-webdesign/joomla-shop/downloads
-
-Open http://0.0.0.0/administrator/index.php in a browser to login as an administrator.  Visit the link http://0.0.0.0/administrator/index.php?option=com_installer&view=install to install the Joomshopping extension.
-
-Use the Upload Package file tab to upload previously downloaded Joomshopping's package and install the Joomshopping extension.
-
-## Add menu link
-
-Open http://0.0.0.0/administrator/index.php?option=com_menus&view=items&menutype= in a browser and create a menu item selecting the component Joomshopping -> Products list
-
-## Populate shop data
-
-1. Create a test category visiting the link http://0.0.0.0/administrator/index.php?option=com_jshopping&controller=categories&catid=0
-2. Create a test product visting the link http://0.0.0.0/administrator/index.php?option=com_jshopping&controller=products&category_id=0
-
-# Install payment plugin
-
-Open http://0.0.0.0/administrator/index.php?option=com_jshopping&controller=update to install the payment plugin. Go to Install from Folder, type the path /plg_begateway and click Install & Update.
-
-Login to the running `joomla` container by
-
-```
-docker-compose exec joomla bash
+```sh
+scripts/build-release.sh
 ```
 
-Execute the shell command to create a symlink to mounted plugin volume
+Upload `dist/joomshopping-begateway.zip` through **JoomShopping → Install & Update**.
+The ZIP must contain `update.sql` and `components/` at its root. Do not install the
+repository's Source code ZIP. Bundled dependencies are included; merchants do not
+need Composer. Reinstalling preserves the payment method and its saved settings.
 
+Open **JoomShopping → Options → Payments → Credit or debit card → Config**,
+configure the README's test shop, save, and publish the method. Version 3.0.0
+requires JoomShopping 5.10.x (JSON payment configuration); older installations
+should use a 2.x module release.
+
+## End-to-end test
+
+Create a published category and a published EUR 1.00 product with stock. Enable
+guest checkout and disable shipping for this test. Set completed/pending/failed
+payment statuses to Paid (6) / Pending (1) / Canceled (3).
+
+Expose the local server using a tunnel, for example:
+
+```sh
+cloudflared tunnel --url http://localhost:8080
 ```
-rm -rf /var/www/html/components/com_jshopping/payments/pm_begateway
-ln -fs /plg_begateway/components/com_jshopping/payments/pm_begateway /var/www/html/components/com_jshopping/payments/
+
+Use the public HTTPS URL throughout checkout so the gateway can deliver its
+notification to the same instance. The development Apache configuration honors
+`X-Forwarded-Proto` from the local tunnel. Do not expose this development stack
+as a production deployment.
+
+Install Playwright in a separate test directory and make it available to Node
+(e.g. via `NODE_PATH`). No test dependency is shipped in the payment archive.
+
+```sh
+SHOP_URL=https://your-tunnel.trycloudflare.com PRODUCT_ID=1 CATEGORY_ID=1 \
+  node tests/checkout.cjs
 ```
 
-# Configure payment plugin
+The test uses both cards from the README and checks the hosted success/decline
+result and the return to the shop. Screenshots and results are saved under
+`/tmp/begateway-e2e` (override with `ARTIFACT_DIR`). Independently check the local
+order database: successful notification must set status 6, declined notification
+status 3, and both must record the gateway UID. A browser return alone does not
+prove callback handling. Do not configure production credentials for this test.
 
-Open the link http://0.0.0.0/administrator/index.php?option=com_jshopping&controller=payments in a browser.
+## Release
 
-Edit and enable the payment method with the `begateway` code.
-
-# Translation
-
-Install a language pack using the menu System -> Languages. 
-
-If the JoomShopping menu items in the admin panel hasn't been translated after that, then copy the language ini-file manually e.g.
-
-```
-cp administrator/components/com_jshopping/language/ru-RU.com_jshopping.sys.ini administrator/language/ru-RU/
-```
+Run PHP syntax checks and the end-to-end checks before tagging. Run
+`scripts/build-release.sh` to produce the same installer archive as CI. Tag
+`3.0.0` and push the tag to trigger `.github/workflows/release.yml`, which
+publishes `joomshopping-begateway.zip` as a GitHub release asset. GitHub Actions
+requires repository `contents: write` permission (declared in the workflow).

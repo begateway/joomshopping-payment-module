@@ -1,16 +1,19 @@
-[Русская версия](#Модуль-оплаты-begateway-для-joomla-и-joomshopping-4x5x)
+[Русская версия](#Модуль-оплаты-begateway-для-joomla-и-joomshopping-510x)
 
-# beGateway payment module for Joomla and JoomShopping 4.x/5.x
+# beGateway payment module for Joomla and JoomShopping 5.10.x
+
+Version **3.0.0** uses the Joomla and JoomShopping namespaced APIs and does not require the Joomla backward compatibility plugin. Use the 2.x releases for older JoomShopping installations.
 
 ## System requirements
 
 * [cURL extension](http://php.net/manual/en/book.curl.php)
-* [Joomla](http://www.joomla.org/download.html) 4.x (the module was tested with version 4.4.5)
-* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x/5.x (the module was tested with version 4.18.5/5.4.0)
+* [Joomla](http://www.joomla.org/download.html) 6.x (tested with version 6.2.1 on PHP 8.5.12)
+* [JoomShopping](http://joomshopping.pro/download/component.html) 5.10.x (tested with version 5.10.0)
 
 ## The module installation
 
 1. Download the latest version of the plugin [joomshopping-begateway.zip](https://github.com/begateway/joomshopping-payment-module/releases)
+   Download the release asset, not GitHub's **Source code** ZIP. The installer archive contains `update.sql` and `components/` at its root.
 2. Go to Joomla's administration panel
 3. Go to the menu Components -> JoomShopping -> Install & Update (arrow #1)
   ![go to extension manager](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/go_to_extensions_manager.png)
@@ -205,19 +208,22 @@ paymentResultButton: {
 
 Issue pull requests or send feature requests.
 
-[English version](#begateway-payment-module-for-joomla-and-joomshopping-4x5x)
+[English version](#begateway-payment-module-for-joomla-and-joomshopping-510x)
 
-# Модуль оплаты beGateway для Joomla и JoomShopping 4.x/5.x
+# Модуль оплаты beGateway для Joomla и JoomShopping 5.10.x
+
+Версия **3.0.0** использует современные API Joomla и JoomShopping и не требует плагина обратной совместимости Joomla. Для старых установок JoomShopping используйте релизы 2.x.
 
 ## Системные требования
 
 * [cURL](http://php.net/manual/en/book.curl.php)
-* [Joomla](http://www.joomla.org/download.html) 4.x (модуль был разработан и протестирован с версией 4.4.5)
-* [JoomShopping](http://joomshopping.pro/download/component.html) 4.x/5.x (модуль был разработан и протестирован с версией 4.18.5/5.4.0)
+* [Joomla](http://www.joomla.org/download.html) 6.x (протестировано с версией 6.2.1 и PHP 8.5.12)
+* [JoomShopping](http://joomshopping.pro/download/component.html) 5.10.x (протестировано с версией 5.10.0)
 
 ## Установка
 
 1. Скачайте последнюю версию модуля [joomshopping-begateway.zip](https://github.com/begateway/joomshopping-payment-module/releases)
+   Скачивайте готовый архив релиза, а не **Source code** ZIP. В корне установочного архива находятся `update.sql` и `components/`.
 2. Зайдите в панель администратора Joomla
 3. Перейдите в меню Компоненты -> JoomShopping -> Установка и обновление (стрелка #1)
   ![go to extension manager](https://raw.githubusercontent.com/beGateway/joomshopping-payment-module/master/doc/img/ru/go_to_extensions_manager.png)

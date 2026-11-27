@@ -1,0 +1,18 @@
+[
+  {
+    "scenario": "success",
+    "orderNumber": "00000004",
+    "uid": "5f22efc8-bc71-4375-af1e-6b1ca9a3f7d9",
+    "resultText": "TEST MODE\necomcharge.com\nSecure payment is provided by Demo PSP\nSuccess\nOrder number 00000004\nTransaction receipt\nTransaction amount\n1.00 EUR\nPayment methods\nVISA XXXX 0000\nPayment ID\ntest descriptor\nOperation number\n5f22efc8-bc71-4375-af1e-6b1ca9a3f7d9\nContinue\nDownload PDF",
+    "returnUrl": "https://fill-knowledge-towers-angle.trycloudflare.com/index.php/component/jshopping/checkout/finish",
+    "returnText": "You are here: \u00a0\nHome\nOrder completed\n\nThank you for your order\n\nCopyright MAXXmarketing GmbH\nJoomShopping Download & Support\nMain Menu\nHome\nLogin Form\nUsername\nPassword\nShow Password\nRemember Me\n Sign in with a passkey\nLog in\nForgot your password?\nForgot your username?"
+  },
+  {
+    "scenario": "decline",
+    "orderNumber": "00000005",
+    "uid": "cba7016f-2c9f-4e71-b7ea-f5d8c7fd6533",
+    "resultText": "TEST MODE\necomcharge.com\nSecure payment is provided by Demo PSP\nError\nOrder number 00000005\nTransaction receipt\nMessage\nTransaction declined. Try again or contact the merchant for details.\nTransaction amount\n1.00 EUR\nPayment methods\nVISA XXXX 0019\nPayment ID\ntest descriptor\nOperation number\ncba7016f-2c9f-4e71-b7ea-f5d8c7fd6533\nContinue\nCancel\nDownload PDF",
+    "returnUrl": "https://fill-knowledge-towers-angle.trycloudflare.com/index.php?option=com_jshopping&controller=checkout&task=step5&act=cancel&js_paymentclass=pm_begateway&status=failed&uid=cba7016f-2c9f-4e71-b7ea-f5d8c7fd6533",
+    "returnText": "You are here: \u00a0\nHome\nConfirm Order\n Address\n Payment Method\n Confirm Order\nImage\tItem\tSingle price\tQuantity\tTotal\n\n\t\nBEP-33688 Test Product\n\t\n1.00 EUR\n\t\n1\n\t\n1.00 EUR\nTotal\t1.00 EUR\nBilling address: John Doe, 1 Test Street, 10115 Berlin Germany\nDelivery address: John Doe, 1 Test Street, 10115 Berlin Germany\nPayment method: Credit or debit card\nNotes added below will be added to your order:\n TERMS OF SERVICE and RETURN POLICY confirm\n Confirm order\nCopyright MAXXmarketing GmbH\nJoomShopping Download & Support\nMain Menu\nHome\nLogin Form\nUsername\nPassword\nShow Password\nRemember Me\n Sign in with a passkey\nLog in\nForgot your password?\nForgot your username?"
+  }
+]
